@@ -6,14 +6,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -23,9 +26,12 @@ public class HomeScreen extends AppCompatActivity {
     Button btnShowData;
     Button btnUpdate;
     Button btnDelete;
+    Button btnDate;
     EditText nameEditText;
     EditText idEditText;
-    LinearLayout linearLayout1;
+    ScrollView linearLayout1;
+    DialogFragment newFragment = new DatePickerFragment();
+    DatePicker datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +47,12 @@ public class HomeScreen extends AppCompatActivity {
         btnShowData = (Button)findViewById(R.id.BTNShowData);
         btnUpdate = (Button)findViewById(R.id.BTNUpdate);
         btnDelete = (Button)findViewById(R.id.BTNDelete);
+        btnDate = (Button)findViewById(R.id.BTNDate);
         nameEditText = (EditText)findViewById(R.id.EDITTEXT_NAME);
         idEditText = (EditText)findViewById(R.id.EditText_ID);
+        datePicker = (DatePicker)findViewById(R.id.datePicker1);
 
-        linearLayout1 = (LinearLayout)findViewById(R.id.LinearLayout1);
+        linearLayout1 = (ScrollView)findViewById(R.id.ScrollLayout1);
 
         addOnclickListeners();
 
@@ -142,6 +150,13 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
+        btnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(linearLayout1);
+            }
+        });
+
     }//close addOnclickListener()
 
     public void showAlertDialog(String title, String message){
@@ -170,6 +185,15 @@ public class HomeScreen extends AppCompatActivity {
     public void clearTExtFields(){
         nameEditText.setText("");
         idEditText.setText("");
+    }
+
+    public void showDatePickerDialog(View v) {
+
+        Bundle b = new Bundle();
+
+
+
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
 

@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_1_NAME = "EVENT";
     public static final String TABLE_1_COL_1_NAME = "ID";
     public static final String TABLE_1_COL_2_NAME = "NAME";
+    public static final String TABLE_1_COL_3_NAME = "DATE";
 
 
 
@@ -92,8 +93,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //update query was successful
             return true;
         }
-
-
 
     }
 
