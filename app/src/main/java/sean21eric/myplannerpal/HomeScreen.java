@@ -1,5 +1,7 @@
 package sean21eric.myplannerpal;
 
+import android.app.AlertDialog;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +20,7 @@ public class HomeScreen extends AppCompatActivity {
     //vars
     DatabaseHelper myHelper;
     Button btnInsert;
+    Button btnShowData;
     EditText nameEditText;
     LinearLayout linearLayout1;
 
@@ -32,12 +35,11 @@ public class HomeScreen extends AppCompatActivity {
 
         //get the button and edit text
         btnInsert = (Button)findViewById(R.id.BTNInsert);
+        btnShowData = (Button)findViewById(R.id.BTNShowData);
         nameEditText = (EditText)findViewById(R.id.EditText1);
         linearLayout1 = (LinearLayout)findViewById(R.id.LinearLayout1);
 
-        addOnclickListener();
-
-
+        addOnclickListeners();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +52,8 @@ public class HomeScreen extends AppCompatActivity {
 
     }//close onCreate()
 
-    public void addOnclickListener(){
+    public void addOnclickListeners(){
+
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,15 +68,44 @@ public class HomeScreen extends AppCompatActivity {
                     Snackbar.make(linearLayout1, "FAILURE :(", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
 
-
+                nameEditText.setText("");
             }
         });
+
+        btnShowData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Cursor cursor = myHelper.getAllEvents();
+
+                //check number of events returned
+                if(cursor.getCount() == 0){
+                    //no data
+                    showAlertDialog("ERROR", "No Data");
+                    return;
+                }
+                //if gets here, there is data
+                StringBuffer stringBuffer = new StringBuffer();
+                while (cursor.moveToNext()){
+                    //add data to the buffer
+                    stringBuffer.append("ID: " + cursor.getString(0) + "\n");
+                    stringBuffer.append("NAME: " + cursor.getString(1) + "\n\n");
+                }
+
+                //show the data in an alert dialog
+                showAlertDialog("Data", stringBuffer.toString());
+            }
+        });
+
+    }//close addOnclickListener()
+
+    public void showAlertDialog(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
     }
-
-
-
-
-
 
 
     /*

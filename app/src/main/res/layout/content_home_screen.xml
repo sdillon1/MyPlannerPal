@@ -37,10 +37,23 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Insert"
-        android:id="@+id/BTNInsert"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Insert"
+            android:id="@+id/BTNInsert"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Data"
+            android:id="@+id/BTNShowData"/>
+    </LinearLayout>
+
 </LinearLayout>
