@@ -74,4 +74,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_1_NAME, null);
         return c;
     }
+
+    public boolean updateEvent(String id, String name){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(TABLE_1_COL_1_NAME, id);
+        contentValues.put(TABLE_1_COL_2_NAME, name);
+
+        int rowsUpdated = db.update(TABLE_1_NAME, contentValues, "ID = ?", new String[] {id});
+
+        if(rowsUpdated == 0){
+            //no rows were updated in the database
+            return false;
+        }else{
+            //update query was successful
+            return true;
+        }
+
+
+
+    }
 }

@@ -21,7 +21,9 @@ public class HomeScreen extends AppCompatActivity {
     DatabaseHelper myHelper;
     Button btnInsert;
     Button btnShowData;
+    Button btnUpdate;
     EditText nameEditText;
+    EditText idEditText;
     LinearLayout linearLayout1;
 
     @Override
@@ -36,7 +38,10 @@ public class HomeScreen extends AppCompatActivity {
         //get the button and edit text
         btnInsert = (Button)findViewById(R.id.BTNInsert);
         btnShowData = (Button)findViewById(R.id.BTNShowData);
-        nameEditText = (EditText)findViewById(R.id.EditText1);
+        btnUpdate = (Button)findViewById(R.id.BTNUpdate);
+        nameEditText = (EditText)findViewById(R.id.EDITTEXT_NAME);
+        idEditText = (EditText)findViewById(R.id.EditText_ID);
+
         linearLayout1 = (LinearLayout)findViewById(R.id.LinearLayout1);
 
         addOnclickListeners();
@@ -69,6 +74,7 @@ public class HomeScreen extends AppCompatActivity {
                 }
 
                 nameEditText.setText("");
+                deselectEdittext();
             }
         });
 
@@ -94,6 +100,23 @@ public class HomeScreen extends AppCompatActivity {
 
                 //show the data in an alert dialog
                 showAlertDialog("Data", stringBuffer.toString());
+                deselectEdittext();
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                boolean isUpdated = myHelper.updateEvent(idEditText.getText().toString(),nameEditText.getText().toString());
+
+                if(isUpdated == true){
+                    Snackbar.make(linearLayout1, "UPDATE SUCCESS! :)", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }else{
+                    Snackbar.make(linearLayout1, "UPDATE FAILURE! :(", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+
+                deselectEdittext();
             }
         });
 
@@ -105,6 +128,18 @@ public class HomeScreen extends AppCompatActivity {
         builder.setTitle(title);
         builder.setMessage(message);
         builder.show();
+    }
+
+    public void deselectEdittext(){
+        //unselect all the edit texts after button click to get rid of blinking curser
+        /*
+        nameEditText.setSelected(false);
+        nameEditText.setFocusable(false);
+        nameEditText.setFocusable(true);
+        idEditText.setSelected(false);
+        idEditText.setFocusable(false);
+        idEditText.setFocusable(true);
+        */
     }
 
 
