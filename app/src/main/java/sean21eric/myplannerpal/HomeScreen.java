@@ -22,6 +22,7 @@ public class HomeScreen extends AppCompatActivity {
     Button btnInsert;
     Button btnShowData;
     Button btnUpdate;
+    Button btnDelete;
     EditText nameEditText;
     EditText idEditText;
     LinearLayout linearLayout1;
@@ -39,6 +40,7 @@ public class HomeScreen extends AppCompatActivity {
         btnInsert = (Button)findViewById(R.id.BTNInsert);
         btnShowData = (Button)findViewById(R.id.BTNShowData);
         btnUpdate = (Button)findViewById(R.id.BTNUpdate);
+        btnDelete = (Button)findViewById(R.id.BTNDelete);
         nameEditText = (EditText)findViewById(R.id.EDITTEXT_NAME);
         idEditText = (EditText)findViewById(R.id.EditText_ID);
 
@@ -72,8 +74,7 @@ public class HomeScreen extends AppCompatActivity {
                 }else{
                     Snackbar.make(linearLayout1, "FAILURE :(", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
-
-                nameEditText.setText("");
+                clearTExtFields();
                 deselectEdittext();
             }
         });
@@ -108,7 +109,7 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                boolean isUpdated = myHelper.updateEvent(idEditText.getText().toString(),nameEditText.getText().toString());
+                boolean isUpdated = myHelper.updateEvent(idEditText.getText().toString(), nameEditText.getText().toString());
 
                 if(isUpdated == true){
                     Snackbar.make(linearLayout1, "UPDATE SUCCESS! :)", Snackbar.LENGTH_LONG).setAction("Action", null).show();
@@ -116,7 +117,28 @@ public class HomeScreen extends AppCompatActivity {
                     Snackbar.make(linearLayout1, "UPDATE FAILURE! :(", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
 
+                clearTExtFields();
                 deselectEdittext();
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int deletedRows = myHelper.deleteEvent(idEditText.getText().toString());
+
+                if(deletedRows == 0){
+                    //no rows deleted
+                    Snackbar.make(linearLayout1, "Delete Failure! :)", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }else{
+                    //rows were deleted
+                    Snackbar.make(linearLayout1, "Delete SUCCESS! :)", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+
+                deselectEdittext();
+                clearTExtFields();
+
             }
         });
 
@@ -140,7 +162,17 @@ public class HomeScreen extends AppCompatActivity {
         idEditText.setFocusable(false);
         idEditText.setFocusable(true);
         */
+
+        idEditText.clearFocus();
+        nameEditText.clearFocus();
     }
+
+    public void clearTExtFields(){
+        nameEditText.setText("");
+        idEditText.setText("");
+    }
+
+
 
 
     /*

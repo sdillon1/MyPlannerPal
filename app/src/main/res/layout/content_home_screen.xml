@@ -65,6 +65,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Show Data"
+            android:id="@+id/BTNShowData"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Insert"
             android:id="@+id/BTNInsert"
             android:layout_gravity="center_horizontal"/>
@@ -72,15 +78,21 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show Data"
-            android:id="@+id/BTNShowData"/>
+            android:text="Update"
+            android:id="@+id/BTNUpdate"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update"
-            android:id="@+id/BTNUpdate"/>
-
+            android:text="Delete Event"
+            android:id="@+id/BTNDelete"/>
     </LinearLayout>
 
 </LinearLayout>
