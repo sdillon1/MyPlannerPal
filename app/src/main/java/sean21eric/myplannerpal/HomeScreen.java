@@ -61,6 +61,14 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
+        btn_Launch_SetTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Alarm_Activity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void findByIds(){
