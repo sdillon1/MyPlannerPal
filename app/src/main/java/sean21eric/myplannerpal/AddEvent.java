@@ -1,6 +1,7 @@
 package sean21eric.myplannerpal;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,8 +15,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
-public class AddEvent extends AppCompatActivity {
+public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
 
 
@@ -57,6 +59,8 @@ public class AddEvent extends AppCompatActivity {
         linearLayout1 = (ScrollView)findViewById(R.id.ScrollLayout1);
 
         addOnclickListeners();
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +213,15 @@ public class AddEvent extends AppCompatActivity {
 
         Bundle b = new Bundle();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        // Do something with the date chosen by the user
+
+        Toast.makeText(this, "Activity Date set " + month + " - " + day + " - " + year, Toast.LENGTH_LONG).show();
+
+
+
     }
 
 
