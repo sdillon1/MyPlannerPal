@@ -19,13 +19,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //vars
     public static final String DATABASE_NAME = "MyPlannerPal";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     //table1
     public static final String TABLE_1_NAME = "EVENT";
     public static final String TABLE_1_COL_1_NAME = "ID";
     public static final String TABLE_1_COL_2_NAME = "NAME";
     public static final String TABLE_1_COL_3_NAME = "DATE";
-
 
 
 
@@ -38,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("create table " + TABLE_1_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT);");
+        db.execSQL("create table " + TABLE_1_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, DATE TEXT);");
 
     }
 
@@ -50,12 +49,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //insert methods
-    public boolean insertEvent(String name){
+    public boolean insertEvent(String name, String date){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(TABLE_1_COL_2_NAME, name);
+        contentValues.put(TABLE_1_COL_3_NAME, date);
 
         long result = db.insert(TABLE_1_NAME, null, contentValues);
 
@@ -76,13 +76,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return c;
     }
 
-    public boolean updateEvent(String id, String name){
+    public boolean updateEvent(String id, String name, String date){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(TABLE_1_COL_1_NAME, id);
         contentValues.put(TABLE_1_COL_2_NAME, name);
+        contentValues.put(TABLE_1_COL_3_NAME, date);
 
         int rowsUpdated = db.update(TABLE_1_NAME, contentValues, "ID = ?", new String[] {id});
 
@@ -102,6 +103,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return db.delete(TABLE_1_NAME, "ID = ?", new String[] {id});
 
+    }
+
+    public void deleteAllRows(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_1_NAME, null, null);
     }
 
 

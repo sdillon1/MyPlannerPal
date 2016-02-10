@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +41,8 @@ public class HomeScreen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        String TAG = "onCreate()";
+
         myHelper = new DatabaseHelper(this);
 
         //get the button and edit text
@@ -60,10 +63,13 @@ public class HomeScreen extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "All rows deleted", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+                myHelper.deleteAllRows();
             }
         });
+
+        Log.d(TAG, "Time to string: " + (datePicker.getMonth() + 1) + " " + datePicker.getDayOfMonth() + " " + datePicker.getYear());
 
     }//close onCreate()
 
@@ -74,8 +80,10 @@ public class HomeScreen extends AppCompatActivity {
             public void onClick(View v) {
 
                 String s = nameEditText.getText().toString();
+                String date = datePicker.getYear() + "-" + (datePicker.getMonth()) + "-" + datePicker.getDayOfMonth();
 
-                boolean isInserted = myHelper.insertEvent(s);
+
+                boolean isInserted = myHelper.insertEvent(s, date);
 
                 if(isInserted == true){
                     Snackbar.make(linearLayout1, "SUCCESS! :)", Snackbar.LENGTH_LONG).setAction("Action", null).show();
@@ -104,7 +112,8 @@ public class HomeScreen extends AppCompatActivity {
                 while (cursor.moveToNext()){
                     //add data to the buffer
                     stringBuffer.append("ID: " + cursor.getString(0) + "\n");
-                    stringBuffer.append("NAME: " + cursor.getString(1) + "\n\n");
+                    stringBuffer.append("NAME: " + cursor.getString(1) + "\n");
+                    stringBuffer.append("DATE: " + cursor.getString(2) + "\n\n");
                 }
 
                 //show the data in an alert dialog
@@ -117,7 +126,7 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                boolean isUpdated = myHelper.updateEvent(idEditText.getText().toString(), nameEditText.getText().toString());
+                boolean isUpdated = myHelper.updateEvent(idEditText.getText().toString(), nameEditText.getText().toString(), getDate());
 
                 if(isUpdated == true){
                     Snackbar.make(linearLayout1, "UPDATE SUCCESS! :)", Snackbar.LENGTH_LONG).setAction("Action", null).show();
@@ -187,12 +196,19 @@ public class HomeScreen extends AppCompatActivity {
         idEditText.setText("");
     }
 
+    public String getDate(){
+
+        String date;
+        date = datePicker.getYear() + "-" + (datePicker.getMonth()) + "-" + datePicker.getDayOfMonth();
+        return date;
+        //Log.d(TAG, "Time to string: " + (datePicker.getMonth() + 1) + " " + datePicker.getDayOfMonth() + " " + datePicker.getYear());
+
+
+    }
+
     public void showDatePickerDialog(View v) {
 
         Bundle b = new Bundle();
-
-
-
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
