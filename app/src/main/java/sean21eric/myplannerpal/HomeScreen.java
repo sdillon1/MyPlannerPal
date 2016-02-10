@@ -1,5 +1,6 @@
 package sean21eric.myplannerpal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,9 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class HomeScreen extends AppCompatActivity {
 
+    Button btn_Launch_AddEvent;
+    Button btn_Launch_SetTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +22,24 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_homescreen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //initialize things
+        findByIds();
+        setOnclickListeners();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -28,6 +50,29 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
     }
+
+    public void setOnclickListeners(){
+
+        btn_Launch_AddEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddEvent.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    public void findByIds(){
+        btn_Launch_AddEvent = (Button)findViewById(R.id.BTN_Launch_AddEvent);
+        btn_Launch_SetTimer = (Button)findViewById(R.id.BTN_Launch_SetTimer);
+    }
+
+
+
+
+
+
 
 
 
