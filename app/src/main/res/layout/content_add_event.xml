@@ -24,7 +24,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/LinearLayour_NameOfEvent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,15 +38,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/EDITTEXT_NAME"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            />
 
     </LinearLayout>
 
-    <DatePicker
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/datePicker1"
-        android:layout_gravity="center_horizontal"/>
+        android:id="@+id/LinearLayout_DateOfEvent"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Date of Event"
+            android:id="@+id/textView3"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/EDITTEXT_DATE"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_weight="1"
+            android:editable="false"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/IMAGEBUTTON_Date"
+            android:src="@android:drawable/ic_menu_my_calendar"/>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -151,6 +177,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/TEXTVIEW_Spacer1"/>
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

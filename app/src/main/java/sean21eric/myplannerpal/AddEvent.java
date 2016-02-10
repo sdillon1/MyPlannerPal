@@ -14,7 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
@@ -29,8 +31,10 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     Button btnUpdate;
     Button btnDelete;
     Button btnDate;
+    ImageButton imageButtonDate;
     EditText nameEditText;
     EditText idEditText;
+    EditText editTextDate;
     ScrollView linearLayout1;
     DialogFragment newFragment = new DatePickerFragment();
     DatePicker datePicker;
@@ -52,9 +56,10 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         btnUpdate = (Button)findViewById(R.id.BTNUpdate);
         btnDelete = (Button)findViewById(R.id.BTNDelete);
         btnDate = (Button)findViewById(R.id.BTNDate);
+        imageButtonDate = (ImageButton)findViewById(R.id.IMAGEBUTTON_Date);
         nameEditText = (EditText)findViewById(R.id.EDITTEXT_NAME);
         idEditText = (EditText)findViewById(R.id.EditText_ID);
-        datePicker = (DatePicker)findViewById(R.id.datePicker1);
+        editTextDate = (EditText)findViewById(R.id.EDITTEXT_DATE);
 
         linearLayout1 = (ScrollView)findViewById(R.id.ScrollLayout1);
 
@@ -72,7 +77,7 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
             }
         });
 
-        Log.d(TAG, "Time to string: " + (datePicker.getMonth() + 1) + " " + datePicker.getDayOfMonth() + " " + datePicker.getYear());
+
 
     }//close onCreate()
 
@@ -83,8 +88,8 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
             public void onClick(View v) {
 
                 String s = nameEditText.getText().toString();
-                String date = datePicker.getYear() + "-" + (datePicker.getMonth()) + "-" + datePicker.getDayOfMonth();
-
+                //String date = datePicker.getYear() + "-" + (datePicker.getMonth()) + "-" + datePicker.getDayOfMonth();
+                String date = editTextDate.getText().toString();
 
                 boolean isInserted = myHelper.insertEvent(s, date);
 
@@ -169,6 +174,20 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
             }
         });
 
+        editTextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(linearLayout1);
+            }
+        });
+
+        imageButtonDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(linearLayout1);
+            }
+        });
+
     }//close addOnclickListener()
 
     public void showAlertDialog(String title, String message){
@@ -202,7 +221,9 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     public String getDate(){
 
         String date;
-        date = datePicker.getYear() + "-" + (datePicker.getMonth()) + "-" + datePicker.getDayOfMonth();
+        //date = datePicker.getYear() + "-" + (datePicker.getMonth()) + "-" + datePicker.getDayOfMonth();
+        date = editTextDate.getText().toString();
+
         return date;
         //Log.d(TAG, "Time to string: " + (datePicker.getMonth() + 1) + " " + datePicker.getDayOfMonth() + " " + datePicker.getYear());
 
@@ -220,7 +241,7 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
 
         Toast.makeText(this, "Activity Date set " + month + " - " + day + " - " + year, Toast.LENGTH_LONG).show();
 
-
+        editTextDate.setText(month + " - " + day + " - " + year);
 
     }
 
