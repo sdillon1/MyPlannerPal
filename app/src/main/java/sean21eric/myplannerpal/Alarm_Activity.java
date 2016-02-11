@@ -1,13 +1,34 @@
 package sean21eric.myplannerpal;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-public class Alarm_Activity extends AppCompatActivity {
+public class Alarm_Activity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+
+    //vars
+    ImageButton btn_PickDate;
+    ImageButton btn_PickTime;
+    EditText et_Date;
+    EditText et_Time;
+    EditText et_AlarmName;
+
+    //fragment vars
+    DialogFragment datePickerFragment = new DatePickerFragment();
+
+    //layout vars
+    LinearLayout ll_Root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +46,92 @@ public class Alarm_Activity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //initialize activity, find by ids and set onclick listeners
+        initialize();
+
+    }//onCreate()
+
+
+
+
+
+
+
+
+
+
+
+    //date fragment dialog functions
+    public void showDatePickerDialog(View v) {
+
+        datePickerFragment.show(getSupportFragmentManager(), "datePicker");
+
     }
 
-}
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        // Do something with the date chosen by the user
+
+        Toast.makeText(this, "Activity Date set " + month + " - " + day + " - " + year, Toast.LENGTH_LONG).show();
+
+        et_Date.setText(month + " - " + day + " - " + year);
+
+    }
+
+    private void setOnclickListeners(){
+        //set the onclick listeners
+
+        btn_PickDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(ll_Root);
+            }
+        });
+
+    }
+
+    private void findByIds(){
+
+
+
+        //vars
+        btn_PickDate = (ImageButton)findViewById(R.id.ImageButton_Alarm_Date);
+        btn_PickTime = (ImageButton)findViewById(R.id.ImageButton_Alarm_Time);
+        et_Date = (EditText)findViewById(R.id.EditText_Alarm_Date);
+        et_Time = (EditText)findViewById(R.id.EditText_Alarm_Time);
+        et_AlarmName = (EditText)findViewById(R.id.EditText_Alarm_Name);
+
+        //layout vars
+        ll_Root = (LinearLayout)findViewById(R.id.LinearLayout_Alarm_Root);
+
+    }
+
+    private void initialize(){
+
+        findByIds();
+        setOnclickListeners();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}//close Alarm_Activity class

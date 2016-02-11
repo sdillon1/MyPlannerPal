@@ -64,7 +64,8 @@
             android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_weight="1"
-            android:editable="false"/>
+            android:editable="false"
+            android:layout_gravity="center_horizontal"/>
 
         <ImageButton
             android:layout_width="wrap_content"

@@ -12,7 +12,10 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="sean21eric.myplannerpal.Alarm_Activity"
     tools:showIn="@layout/activity_alarm_"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:id="@+id/LinearLayout_Alarm_Root"
+    android:gravity="center">
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,6 +24,89 @@
         android:text="Set an Alarm"
         android:id="@+id/TV_AlarmTitle"
         android:layout_gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LinearLayout_Alarm_Name"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Alarm Name:"
+            android:id="@+id/TextView_Alarm_Name"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditText_Alarm_Name"
+            android:layout_weight="1"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LinearLayout_Alarm_Time"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Time:"
+            android:id="@+id/TextView_Alarm_Time"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditText_Alarm_Time"
+            android:layout_weight="1"
+            android:editable="false"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ImageButton_Alarm_Time"
+            android:src="@android:drawable/ic_menu_set_as"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LinearLayout_Alarm_Date"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Date:"
+            android:id="@+id/TextView_Alarm_Date"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditText_Alarm_Date"
+            android:layout_weight="1"
+            android:editable="false"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ImageButton_Alarm_Date"
+            android:src="@android:drawable/ic_menu_my_calendar"/>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"

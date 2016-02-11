@@ -38,7 +38,6 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     EditText editTextDate;
     ScrollView linearLayout1;
     DialogFragment newFragment = new DatePickerFragment();
-    DatePicker datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
