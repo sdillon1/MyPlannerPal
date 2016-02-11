@@ -1,6 +1,7 @@
 package sean21eric.myplannerpal;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,9 +14,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class Alarm_Activity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class Alarm_Activity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
     //vars
     ImageButton btn_PickDate;
@@ -69,13 +71,23 @@ public class Alarm_Activity extends AppCompatActivity implements DatePickerDialo
 
     }
 
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
 
         Toast.makeText(this, "Activity Date set " + month + " - " + day + " - " + year, Toast.LENGTH_LONG).show();
-
         et_Date.setText(month + " - " + day + " - " + year);
 
+    }
+
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        // Do something with the time chosen by the user
+        Toast.makeText(this, "Activity Time set " + hourOfDay+ " : " + minute, Toast.LENGTH_LONG).show();
+        et_Time.setText(hourOfDay+ " : " + minute);
     }
 
     private void setOnclickListeners(){
@@ -85,6 +97,13 @@ public class Alarm_Activity extends AppCompatActivity implements DatePickerDialo
             @Override
             public void onClick(View v) {
                 showDatePickerDialog(ll_Root);
+            }
+        });
+
+        btn_PickTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(ll_Root);
             }
         });
 
