@@ -2,6 +2,7 @@ package sean21eric.myplannerpal;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -55,7 +56,6 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         btnShowData = (Button)findViewById(R.id.BTNShowData);
         btnUpdate = (Button)findViewById(R.id.BTNUpdate);
         btnDelete = (Button)findViewById(R.id.BTNDelete);
-        btnDate = (Button)findViewById(R.id.BTNDate);
         imageButtonDate = (ImageButton)findViewById(R.id.IMAGEBUTTON_Date);
         nameEditText = (EditText)findViewById(R.id.EDITTEXT_NAME);
         idEditText = (EditText)findViewById(R.id.EditText_ID);
@@ -67,13 +67,12 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
 
 
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "All rows deleted", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
-                myHelper.deleteAllRows();
+                areYouSure();
             }
         });
 
@@ -167,13 +166,6 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
             }
         });
 
-        btnDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog(linearLayout1);
-            }
-        });
-
         editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,10 +183,16 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     }//close addOnclickListener()
 
     public void showAlertDialog(String title, String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(title);
         builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing extra but the dialog goes away
+            }
+        });
         builder.show();
     }
 
@@ -243,6 +241,31 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
 
         editTextDate.setText(month + " - " + day + " - " + year);
 
+    }
+
+    public void areYouSure(){
+        //display a dialog box to ask if you are sure you want to delete
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddEvent.this);
+        builder.setMessage("Are you sure?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //yes was checked so call delete
+
+                Snackbar.make(linearLayout1, "All rows deleted", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+                myHelper.deleteAllRows();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //no was clicked so dont delete
+                Snackbar.make(linearLayout1, "Nothing was deleted", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            }
+        });
+        builder.show();
     }
 
 

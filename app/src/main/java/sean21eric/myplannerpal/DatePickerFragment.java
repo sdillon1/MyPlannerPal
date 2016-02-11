@@ -16,11 +16,7 @@ import java.util.Calendar;
  */
 
 public class DatePickerFragment extends DialogFragment
-         {
-
-
-
-
+{
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
