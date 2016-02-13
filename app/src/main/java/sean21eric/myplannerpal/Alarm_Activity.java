@@ -14,6 +14,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -51,6 +52,7 @@ public class Alarm_Activity extends AppCompatActivity implements DatePickerDialo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //lets activity show overtop of lockscreen
         setContentView(R.layout.activity_alarm_);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -180,11 +182,19 @@ public class Alarm_Activity extends AppCompatActivity implements DatePickerDialo
 
        calendar.set(year,month, day, hour, minute, 0);
 
-
+//this uses the broadcast reciever
+        /*
         Intent intent = new Intent(getBaseContext(), MyReceiver1.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), 0, intent, 0);
         // alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() , pendingIntent);
+        */
+
+ //this will hopefully launch an activity on the lockscreen
+        Intent i = new Intent(getBaseContext(), FullscreenAlarm.class);
+        PendingIntent p = PendingIntent.getActivity(this, 0, i, 0);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() , p);
+
 
         Snackbar.make(ll_Root, "Alarm set for: " + hour + " : " + minute + " : " + 0, Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
