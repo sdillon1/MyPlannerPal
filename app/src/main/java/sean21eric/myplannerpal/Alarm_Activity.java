@@ -1,8 +1,13 @@
 package sean21eric.myplannerpal;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -17,20 +22,31 @@ import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class Alarm_Activity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
     //vars
     ImageButton btn_PickDate;
     ImageButton btn_PickTime;
+    ImageButton btn_SetAlarm;
+    ImageButton btn_CancelAlarm;
     EditText et_Date;
     EditText et_Time;
     EditText et_AlarmName;
 
     //fragment vars
     DialogFragment datePickerFragment = new DatePickerFragment();
+    DialogFragment timePickerFragment = new TimePickerFragment();
 
     //layout vars
     LinearLayout ll_Root;
+
+    //for alarms
+    AlarmManager alarmManager;
+
+    //time
+    int hour, minute, year, month, day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +88,8 @@ public class Alarm_Activity extends AppCompatActivity implements DatePickerDialo
     }
 
     public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "timePicker");
+
+        timePickerFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -82,12 +98,19 @@ public class Alarm_Activity extends AppCompatActivity implements DatePickerDialo
         Toast.makeText(this, "Activity Date set " + month + " - " + day + " - " + year, Toast.LENGTH_LONG).show();
         et_Date.setText(month + " - " + day + " - " + year);
 
+        this.year = year;
+        this.month = month;
+        this.day = day;
+
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
         Toast.makeText(this, "Activity Time set " + hourOfDay+ " : " + minute, Toast.LENGTH_LONG).show();
-        et_Time.setText(hourOfDay+ " : " + minute);
+        et_Time.setText(hourOfDay + " : " + minute);
+
+        this.hour = hourOfDay;
+        this.minute = minute;
     }
 
     private void setOnclickListeners(){
@@ -107,6 +130,19 @@ public class Alarm_Activity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
+        btn_SetAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAlarm();
+            }
+        });
+
+        btn_CancelAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelAlarm();
+            }
+        });
     }
 
     private void findByIds(){
@@ -116,6 +152,8 @@ public class Alarm_Activity extends AppCompatActivity implements DatePickerDialo
         //vars
         btn_PickDate = (ImageButton)findViewById(R.id.ImageButton_Alarm_Date);
         btn_PickTime = (ImageButton)findViewById(R.id.ImageButton_Alarm_Time);
+        btn_SetAlarm = (ImageButton)findViewById(R.id.ImageButton_Alarm_SetAlarm);
+        btn_CancelAlarm = (ImageButton)findViewById(R.id.ImangButton_Alarm_Cancel);
         et_Date = (EditText)findViewById(R.id.EditText_Alarm_Date);
         et_Time = (EditText)findViewById(R.id.EditText_Alarm_Time);
         et_AlarmName = (EditText)findViewById(R.id.EditText_Alarm_Name);
@@ -129,6 +167,70 @@ public class Alarm_Activity extends AppCompatActivity implements DatePickerDialo
 
         findByIds();
         setOnclickListeners();
+
+        alarmManager =  (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+    }
+
+    private void setAlarm(){
+
+
+       Calendar calendar = Calendar.getInstance();
+       //calendar.setTimeInMillis(System.currentTimeMillis() + 5000);
+
+       calendar.set(year,month, day, hour, minute, 0);
+
+
+        Intent intent = new Intent(getBaseContext(), MyReceiver1.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), 0, intent, 0);
+        // alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() , pendingIntent);
+
+        Snackbar.make(ll_Root, "Alarm set for: " + hour + " : " + minute + " : " + 0, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+
+
+        /*
+        AlarmManager alarmMgr;
+         PendingIntent alarmIntent;
+
+        alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+        alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+
+// Set the alarm to start at 8:30 a.m.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 13);
+        calendar.set(Calendar.MINUTE, 11);
+
+// setRepeating() lets you specify a precise custom interval--in this case,
+// 20 minutes.
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                1000 * 60 * 1, alarmIntent);
+
+*/
+
+        //Snackbar.make(ll_Root, "Alarm set for: 1 minute", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+
+
+
+    }
+
+    private void cancelAlarm(){
+
+        Intent intent = new Intent(getBaseContext(), MyReceiver1.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), 0, intent, 0);
+
+        if(alarmManager != null){
+            alarmManager.cancel(pendingIntent);
+            Snackbar.make(ll_Root, "Alarm cancelled", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+        }else{
+            Snackbar.make(ll_Root, "Nothing to cancell", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        }
+
 
     }
 

@@ -15,7 +15,7 @@
     android:orientation="vertical"
     android:focusableInTouchMode="true"
     android:id="@+id/LinearLayout_Alarm_Root"
-    android:gravity="center">
+    android:gravity="center_horizontal">
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,31 +108,24 @@
             android:src="@android:drawable/ic_menu_my_calendar"/>
     </LinearLayout>
 
-    <ScrollView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal"
-        android:nestedScrollingEnabled="false">
+        android:layout_height="wrap_content"
+        android:id="@+id/LinearLayout_Alarm_SetAlarm"
+        android:gravity="center_horizontal">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:nestedScrollingEnabled="true">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ImageButton_Alarm_SetAlarm"
+            android:src="@android:drawable/ic_menu_save"/>
 
-            <TimePicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/timePicker"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ImangButton_Alarm_Cancel"
+            android:src="@android:drawable/ic_menu_revert"/>
+    </LinearLayout>
 
-            <DatePicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/datePicker"
-                android:nestedScrollingEnabled="true"/>
-
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>
